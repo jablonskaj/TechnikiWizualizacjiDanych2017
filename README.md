@@ -30,11 +30,10 @@ Blok 2 - Grafika interaktywna / internetowa
 
 Blok 3 - Grafika informatywna
 
-* [11] W: [Percepcja danych](http://biecek.pl/Eseje/indexDane.html); L: [ZwyczajeTramwaje](https://www.dropbox.com/s/1egykiaefhmz5v4/wybraneKolumny.rda?dl=0), [ggmap](http://stat405.had.co.nz/ggmap.pdf), [Linie](https://www.dropbox.com/s/oqrduyarze5z4v8/linie.zip?dl=0)
-* [12] W: [O historii słów kilka](http://biecek.pl/Eseje/indexHistoria.html); L: [DiagrammeR](https://github.com/rich-iannone/DiagrammeR), [igraph1](http://kateto.net/networks-r-igraph), [igraph2](http://kateto.net/network-visualization), [rozkłady pociągów](http://marlenacompton.com/?tag=edward-tufte)
-* [13] W: Prezentacja projektu 3/1; L: L: [ggvis+shiny](http://ggvis.rstudio.com/interactivity.html)
-* [14] W: [Czas i przestrzeń](http://biecek.pl/Eseje/indexDroga.html); L: [Kartogramy](https://github.com/pbiecek/TechnikiWizualizacjiDanych/tree/master/MINI_MIMUW_2014/materialy_z_wykladow_i_lab/mapy), [ZanieczyszczeniePowietrze](https://github.com/pbiecek/TechnikiWizualizacjiDanych/blob/master/MINI_2016/CiekaweDane/gios-pjp-zanieczyszczenie.csv)
-* [15] W: Prezentacja projektu 3/2
+* [11] 10.01.2018 W: [Percepcja danych](http://biecek.pl/Eseje/indexDane.html); L: [ZanieczyszczeniePowietrze](https://github.com/pbiecek/TechnikiWizualizacjiDanych2017/blob/master/Zajecia/Lab2/gios-pjp-data.csv), [dane](http://powietrze.gios.gov.pl/pjp/current/station_details/archive/530#), [wykres1](https://github.com/pbiecek/TechnikiWizualizacjiDanych/blob/master/MINI_2016/CiekaweDane/slupki.pdf),  [wykres2](https://github.com/pbiecek/TechnikiWizualizacjiDanych/blob/master/MINI_2016/CiekaweDane/slupki2.pdf),  [wykres3](https://github.com/pbiecek/TechnikiWizualizacjiDanych/blob/master/MINI_2016/CiekaweDane/slupki3.pdf)
+
+* [12] 17.01.2018 W: Prezentacja projektu 3/1; L: 
+* [13] 24.01.2018 W: Prezentacja projektu 3/2
 
 
 # Zasady zaliczenia
@@ -59,7 +58,9 @@ Propozycje projektów:
 [Punktacja projekt 1](https://docs.google.com/spreadsheets/d/1_6Z8uYRdm0cd29V0kvymWmfQmUN_4tAcb-anye-YYg4/edit?usp=sharing)
 
 [Projekt 2](https://github.com/pbiecek/TechnikiWizualizacjiDanych2017/blob/master/Projekt_2/README.md)
+[Punktacja projekt 2](https://docs.google.com/spreadsheets/d/1DJRIlqscuiyVBVf73jk4taaeeOuYcPXedqUMeauaxyw/edit?usp=sharing)
 
+[Projekt 3](https://github.com/pbiecek/TechnikiWizualizacjiDanych2017/blob/master/Projekt_3/README.md)
 
 # Prezentacje studentów
 
