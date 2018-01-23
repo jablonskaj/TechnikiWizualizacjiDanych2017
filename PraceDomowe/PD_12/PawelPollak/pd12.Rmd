@@ -1,0 +1,133 @@
+---
+title: "Praca domowa nr 12"
+author: "Paweł Pollak"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Opis
+
+W ramach tej pracy domowej została wykonana poprawa i rozwinięcie pracy domowej nr 5 wykonanej przez Karola Szczawińskiego ([praca](https://cdn.rawgit.com/szczawinskik/TechnikiWizualizacjiDanych2017/f9a1f114b99ed0ced73cc3c539f40c162a0e1d5e/PraceDomowe/PD_05/karol_szczawinski/karol_szczawinski_PD_05.html) i [pull request](https://github.com/pbiecek/TechnikiWizualizacjiDanych2017/pull/99)).
+
+* zmiana orientacji wykresów (wg uwag)
+* przeprowadzenie dyskusji (wg uwag)
+* poprawiony wygląd wykresów
+* wprowadzanie innego sposobu przestawienia danych
+
+## Wykresy
+
+```{r}
+library(reshape2)
+library(ggplot2)
+library(RColorBrewer)
+
+data <- data.frame(c("Ergo Hestia", "Benefia", "MTU", "Link4", "Aviva", "AXA", "Goather", "UNIQA", "Proama", "Generali"),
+                   c(4.21, 4.01, 3.79, 3.78, 3.77, 3.24, 2.87, 2.82, 2.81, 2.5),
+                   c(3.76, 4.03, 3.77, 3.76, 3.78, 3.75, 2.7, 2.83, 2.67, 2.54))
+                   #,
+                   #c(3.17, 3.52, 3.03, 4.17, 4.16, NA, 3.47, 2.82, 3.16, 2.4),
+                   #c(3.09, 3.77, 3.12, 3.89, 4.21, NA, 3.11, 3.03, 3.23, 2.45)
+                   #)
+colnames(data) <- c("Firma", "OC", "OC + NWW")
+#, "OC + AC", "OC + AC + NNW")
+```
+
+### Zwykły słupkowy
+
+W tym przypadku, nie zostały wykonane znaczące zmiany.
+
+```{r}
+data.melt <- melt(data, id = 'Firma')
+colnames(data.melt) <- c('Firma', 'Rodzaj ubezpieczenia', 'Ocena')
+
+par(mfrow = c(1,2))
+
+ggplot(data.melt, aes(x = reorder(Firma, Ocena, max), y = Ocena, fill = `Rodzaj ubezpieczenia`)) +
+  geom_bar(stat="identity", width=.7, position = "dodge") +
+  scale_fill_brewer(palette = "Set2") +
+  coord_flip() + 
+  labs(x = "Ubezpieczyciel", title = "Porównanie ocen kosztów ubezpieczeń samochodowych") +
+  theme_bw() +
+  theme(axis.line = element_line(colour = "black"),
+    #panel.grid.major = element_blank(),
+    #panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    plot.title = element_text(face="bold")) 
+```
+
+Wykres bez zmian:
+
+![](1.png)
+
+### Słupkowy "liniowy"
+
+W oryginale kolor *OC + NWW* zawsze przykrywał całą linię. Niepotrzebnie wprowadzało to przewagę tego koloru, sugerując, że to *OC + NWW* ma zawsze lepszą ocenę.
+
+Po poprawie, jedynie część różniąca poszczególne oceny ma kolor odpowiadający rodzajowi ubezpieczenia.
+
+```{r}
+ggplot(data.melt, aes(x = reorder(Firma, Ocena, max), y = Ocena, fill = `Rodzaj ubezpieczenia`)) +
+  geom_bar(stat="identity", width=.09, position = "identity", alpha = 0.5) +
+  geom_point(aes(colour = `Rodzaj ubezpieczenia`), size = 3, alpha = 0.9) +
+  scale_fill_manual(values = RColorBrewer::brewer.pal(8, "Set1")) +
+  scale_colour_manual(values = RColorBrewer::brewer.pal(8, "Set1")) +
+  coord_flip() + 
+  labs(x = "Ubezpieczyciel", title = "Porównanie ocen kosztów ubezpieczeń samochodowych") +
+  theme_bw() +
+  theme(axis.line = element_line(colour = "black"),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    plot.title = element_text(face="bold")) 
+```
+
+Wykres bez zmian:
+
+![](2.png)
+
+
+### Nakładające się słupki
+
+Można przedstawić te dane kładąc nacisk na ogólnie najlepszą ocenę ubezpieczalni (*OC* lub *OC + NWW*).
+Jednocześnie nie tracąc informacji o tym, która ocena w danej ubezpieczalni jest wyższa.
+
+```{r}
+ggplot(data.melt, aes(x = reorder(Firma, Ocena, max), y = Ocena, fill = `Rodzaj ubezpieczenia`)) +
+    geom_bar(stat="identity", alpha = 0.6, position = 'identity') + 
+  scale_fill_brewer(palette = "Set1") +
+  coord_flip()  + 
+  labs(x = "Ubezpieczyciel", title = "Porównanie ocen kosztów ubezpieczeń samochodowych") +
+  theme_bw() +
+  theme(axis.line = element_line(colour = "black"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    plot.title = element_text(face="bold")) 
+```
+
+W wykresach zostało również usunięte tło i został zmieniony wygląd osi i tytuły.
+
+## Dyskusja
+
+Użycie każdego z tych wykresów może być w pewien sposób usprawiedliwione i ma swoje zalety.
+
+1. Pierwszy wykres słupkowy (ze słupkami tego samego ubezpieczyciela obok siebie) jest najłatwiejszy do zrozumienia, najbardziej naturalny. Kładzie nacisk na fakt, że istnieją dwa rodzaje ubezpieczeń.
+Jednak znika gdzieś przekaz, który ubezpieczyciel ma ogólnie najlepszą ofertę, ponieważ słupki bardzo "skaczą".
+
+2. Drugi wykres z cienkimi słupkami jest bliższy ostatniemu wykresowi niż pierwszemu. Tak naprawdę, po dodaniu wspólnego koloru dla części wspólnej słupków rożni się od niego grubością słupków i obecnością kropek. Jednak w na pierwszy rzut oka wydaje się zupełnie inny.
+Jest najmniej intuicyjny ze wszystkich, jednak może to by być związane z tym, że rzadko się widzi takie wykresy. Zatem może kogoś zaciekawić.
+Dzięki kropkom (i w nowej wersji kolorom słupków) widać wyraźnie gdzie różnice pomiędzy oceną oferty *OC* i *OC + NWW* są większe.
+
+3. Trzeci wykres (podobnie jak drugi) będzie przydatny, gdy komuś zależy na położenie nacisku na ogólnie najwyższą wartość oceny ubezpieczyciela albo na różnice w ocenie w zależności od rodzaju oferty. Jednak pokazując jedną z tych cech, nie tracimy na jakości przedstawienia drugiej. 
+
+Widoczna jest ogólna wysokość słupka i to czy (i o ile) jedna z ocen różni się od drugiej w zależności od rodzaju.
+Od razu widać gdzie te różnice są większe, a gdzie nie ma ich prawie w ogóle. W przypadku pierwszego wykresu, mimo że takie informacje są na nim również zawarte, to nie rzucają się aż tak w oczy.
+
+Podsumowując, najrozsądniejsze wydaje się użycie pierwszego lub trzeciego wykresu w zależności od tego na co ma zostać położony nacisk.
+
+
+
